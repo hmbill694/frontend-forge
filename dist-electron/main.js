@@ -1,8 +1,12 @@
-import { app, BrowserWindow } from "electron";
-import { createRequire } from "node:module";
+import { ipcMain, app, BrowserWindow } from "electron";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
-createRequire(import.meta.url);
+ipcMain.handle("hello-world", async () => {
+  return "Hello world";
+});
+ipcMain.handle("generate-html", async (_, args) => {
+  return `The prompt was ${args}`;
+});
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 process.env.APP_ROOT = path.join(__dirname, "..");
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
