@@ -10,10 +10,8 @@ const Database = require("better-sqlite3");
 // Assuming your database file (e.g., 'mydatabase.db') is in your 'resources' folder
 const databasePath = path.resolve(import.meta.env.VITE_DATABASE_URL);
 
-console.log("db-client - Database Path:", databasePath);
-
 // Create a new SQLite database instance
 const database = new Database(databasePath, { verbose: console.log });
 
 export type DB = typeof db;
-export const db = drizzle({ client: database });
+export const db = drizzle(database);
