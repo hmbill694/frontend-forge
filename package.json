@@ -8,10 +8,12 @@
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "rebuild": "electron-rebuild -f -w better-sqlite3"
+    "rebuild": "electron-rebuild -f -w better-sqlite3",
+    "postinstall": "npm run rebuild"
   },
   "dependencies": {
-    "@langchain/core": "^0.3.46",
+    "@langchain/core": "^0.3.47",
+    "@langchain/google-genai": "^0.2.4",
     "@langchain/langgraph": "^0.2.65",
     "@tailwindcss/vite": "^4.1.4",
     "@tanstack/react-query": "^5.74.4",
