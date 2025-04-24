@@ -2,6 +2,7 @@ import { app, BrowserWindow } from "electron";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import "./api";
+import "./db/client";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -56,6 +57,10 @@ app.on("window-all-closed", () => {
     app.quit();
     win = null;
   }
+});
+
+app.on("ready", () => {
+  console.log(process.env.VITE_DATABASE_URL);
 });
 
 app.on("activate", () => {

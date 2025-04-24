@@ -1,6 +1,6 @@
 import type { PageCreatorGraph } from "../agent-graphs/generator-graph";
-import type { GraphStepFunction } from "../types";
-import { generateDocName } from "../utils/doc-name-generator";
+import type { GraphStepFunction } from "../../shared/types/";
+import { generateDocName } from "../../shared/utils/doc-name-generator";
 import fs from "fs";
 
 export const writeToFile: GraphStepFunction<PageCreatorGraph> = async (

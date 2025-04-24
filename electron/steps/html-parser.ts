@@ -1,6 +1,5 @@
-import { ChatMessage } from "@langchain/core/messages";
-import type { GraphStepFunction } from "../types";
-import { Result } from "../utils/result";
+import type { GraphStepFunction } from "../../shared/types";
+import { Result } from "../../shared/utils/result";
 import type { PageCreatorGraph } from "../agent-graphs/generator-graph";
 
 export const htmlParserNode: GraphStepFunction<PageCreatorGraph> = async (

@@ -1,12 +1,17 @@
-import { END, START, StateGraph } from "@langchain/langgraph"
-import { htmlGenerator } from "../steps/html-generator"
-import { htmlParserNode } from "../steps/html-parser"
-import { writeToFile } from "../steps/file-writter"
-import type { BaseMessage } from "@langchain/core/messages";
-import { Annotation } from "@langchain/langgraph";
-import type { BaseChatModel } from "@langchain/core/language_models/chat_models";
+import { BaseChatModel } from "@langchain/core/language_models/chat_models";
+import { BaseMessage } from "@langchain/core/messages";
+import { Annotation, END, START, StateGraph } from "@langchain/langgraph";
+import { htmlGenerator } from "../steps/html-generator";
+import { htmlParserNode } from "../steps/html-parser";
+import { writeToFile } from "../steps/file-writter";
 
-export type PageCreatorGraph = { messages: BaseMessage[], htmlIsValid: Boolean, userInput: string, outputHtml?: string, outputFileName?: string }
+export type PageCreatorGraph = {
+  messages: BaseMessage[];
+  htmlIsValid: Boolean;
+  userInput: string;
+  outputHtml?: string;
+  outputFileName?: string;
+};
 
 function initGraphState() {
   return Annotation.Root({
@@ -20,12 +25,13 @@ function initGraphState() {
     userInput: Annotation<string>,
     htmlIsValid: Annotation<Boolean>,
     outputHtml: Annotation<string>,
-    outputFileName: Annotation<string>
+    outputFileName: Annotation<string>,
   });
 }
 
-
-export default function PageGeneratorAgentGraph<Model extends BaseChatModel = BaseChatModel>(llm: Model ) {
+export default function PageGeneratorAgentGraph<
+  Model extends BaseChatModel = BaseChatModel,
+>(llm: Model) {
   const workflow = new StateGraph(initGraphState())
     .addNode("query-node", htmlGenerator(llm))
     .addNode("html-validator", htmlParserNode)
@@ -33,7 +39,7 @@ export default function PageGeneratorAgentGraph<Model extends BaseChatModel = Ba
     .addEdge(START, "query-node")
     .addEdge("query-node", "html-validator")
     .addEdge("html-validator", "file-writter")
-    .addEdge("file-writter", END)
+    .addEdge("file-writter", END);
 
-    return workflow.compile()
+  return workflow.compile();
 }
