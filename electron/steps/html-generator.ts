@@ -1,8 +1,10 @@
+import { GraphStepFunctionWithModel } from "../../shared/types";
+import { generateDocName } from "../../shared/utils/doc-name-generator";
 import type { PageCreatorGraph } from "../agent-graphs/generator-graph";
-import type { GraphStepFunctionWithModel } from "../types";
 import { ChatMessage } from "@langchain/core/messages";
 
-export const htmlGenerator: GraphStepFunctionWithModel<PageCreatorGraph> = (llm) => async (state) => {
+export const htmlGenerator: GraphStepFunctionWithModel<PageCreatorGraph> =
+  (llm) => async (state) => {
     const msg = await llm.invoke(`
         Act as an expert software developer and produce the html on demand.
         
@@ -24,9 +26,14 @@ export const htmlGenerator: GraphStepFunctionWithModel<PageCreatorGraph> = (llm)
 
         Below is the description of the web page that we need the html for. Take a deep breath you got this.
         ${state.userInput}
-    `)
+    `);
 
-    const trimmedMsg = msg.content.toString().replace(/```(?:html)?/g, '')
+    // The model keeps including ``` ``` at the start and end of the doc
+    const trimmedMsg = msg.content.toString().replace(/```(?:html)?/g, "");
 
-    return { messages: [new ChatMessage(trimmedMsg, "html-generator")], outputHtml: trimmedMsg  }
-}
+    return {
+      messages: [new ChatMessage(trimmedMsg, "html-generator")],
+      outputHtml: trimmedMsg,
+      outputFileName: generateDocName(),
+    };
+  };
