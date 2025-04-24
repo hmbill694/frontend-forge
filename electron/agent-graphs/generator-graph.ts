@@ -3,7 +3,6 @@ import { BaseMessage } from "@langchain/core/messages";
 import { Annotation, END, START, StateGraph } from "@langchain/langgraph";
 import { htmlGenerator } from "../steps/html-generator";
 import { htmlParserNode } from "../steps/html-parser";
-import { writeToFile } from "../steps/file-writter";
 
 export type PageCreatorGraph = {
   messages: BaseMessage[];
@@ -35,11 +34,9 @@ export default function PageGeneratorAgentGraph<
   const workflow = new StateGraph(initGraphState())
     .addNode("query-node", htmlGenerator(llm))
     .addNode("html-validator", htmlParserNode)
-    .addNode("file-writter", writeToFile)
     .addEdge(START, "query-node")
     .addEdge("query-node", "html-validator")
-    .addEdge("html-validator", "file-writter")
-    .addEdge("file-writter", END);
+    .addEdge("html-validator", END);
 
   return workflow.compile();
 }
