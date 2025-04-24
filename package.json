@@ -7,16 +7,17 @@
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "rebuild": "electron-rebuild -f -w better-sqlite3"
   },
   "dependencies": {
     "@langchain/core": "^0.3.46",
     "@langchain/langgraph": "^0.2.65",
-    "@libsql/client": "^0.15.4",
     "@tailwindcss/vite": "^4.1.4",
     "@tanstack/react-query": "^5.74.4",
     "@tanstack/react-router": "^1.117.0",
     "@tanstack/react-router-devtools": "^1.117.0",
+    "better-sqlite3": "^11.9.1",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.42.0",
     "langchain": "^0.3.23",
@@ -35,6 +36,7 @@
     "drizzle-kit": "^0.31.0",
     "electron": "^30.0.1",
     "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
