@@ -3,6 +3,9 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import "./api";
 import "./db/client";
+import initDb from "./init-db";
+
+initDb();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

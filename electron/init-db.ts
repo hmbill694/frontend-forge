@@ -1,20 +1,30 @@
-// import { db } from "./db/client";
-// import * as schema from "./db/schema";
-// import {
-//   generateSQLiteDrizzleJson,
-//   generateSQLiteMigration,
-// } from "drizzle-kit/api";
+import fs from "fs";
+import path from "path";
 
-// export const initDb = async () => {
-//   const [previous, current] = await Promise.all(
-//     [{}, schema].map((schemaObject) => generateSQLiteDrizzleJson(schemaObject)),
-//   );
+export default function initDb() {
+  // Get the current working directory.
+  const currentWorkingDirectory = process.cwd();
 
-//   const statements = await generateSQLiteMigration(previous, current);
+  // Construct the full path to the file.
+  const filePath = path.join(
+    currentWorkingDirectory,
+    import.meta.env.VITE_DATABASE_URL,
+  );
 
-//   const migration = statements.join("\n");
-
-//   db.run(migration);
-
-//   console.log("migrations ran successfully");
-// };
+  // Check if the file exists before attempting to create it.
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      // The file does not exist, so create it.
+      fs.writeFile(filePath, "", (err) => {
+        if (err) {
+          console.error(`Error creating file: ${err.message}`);
+          return; // Exit on error
+        }
+        console.log(`File "forge.db" successfully created at: ${filePath}`);
+      });
+    } else {
+      // The file exists, do nothing.
+      console.log(`File "forge.db" already exists at: ${filePath}`);
+    }
+  });
+}
