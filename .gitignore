@@ -29,3 +29,6 @@ dist-electron/*
 .env
 
 forge.db
+resources/*
+
+package-lock.json

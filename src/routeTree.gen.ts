@@ -12,12 +12,19 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as PageDocIdImport } from './routes/page/$docId'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PageDocIdRoute = PageDocIdImport.update({
+  id: '/page/$docId',
+  path: '/page/$docId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,6 +39,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/page/$docId': {
+      id: '/page/$docId'
+      path: '/page/$docId'
+      fullPath: '/page/$docId'
+      preLoaderRoute: typeof PageDocIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/page/$docId': typeof PageDocIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/page/$docId': typeof PageDocIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/page/$docId': typeof PageDocIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/page/$docId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/page/$docId'
+  id: '__root__' | '/' | '/page/$docId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PageDocIdRoute: typeof PageDocIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PageDocIdRoute: PageDocIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/page/$docId"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/page/$docId": {
+      "filePath": "page/$docId.tsx"
     }
   }
 }

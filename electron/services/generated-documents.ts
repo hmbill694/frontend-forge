@@ -23,7 +23,7 @@ export async function saveDocument(doc: {
 
   return res
     .map((ele) => ele.at(0))
-    .ifNull("Could not find the requested record")
+    .ifNull("Could not save document")
     .getOrThrow();
 }
 
@@ -44,4 +44,12 @@ export async function getGeneratedDoc(query: {
     .map((ele) => ele.at(0))
     .ifNull("Could not get the requested document")
     .getOrThrow()!!;
+}
+
+export async function getGeneratedDocs(query: { projectId: number }) {
+  const res = await Result.fromAsync(() =>
+    db.select().from(pages).where(eq(pages.projectId, query.projectId)),
+  );
+
+  return res.ifNull("Could not get the requested document").getOrThrow()!!;
 }
