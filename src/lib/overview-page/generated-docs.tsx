@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { FC } from "react";
 import type { SelectPage } from "../../../electron/db/schema";
 import { Link } from "@tanstack/react-router";
-import { router } from "../../main";
 export type GeneratedDocListProps = {
   projectId: number;
 };
@@ -27,22 +26,22 @@ const ProjectNotSelected = () => {
   );
 };
 
-const goToPage = (docId: number) => {
-  router.navigate({ to: "/page/$docId", params: { docId: docId.toString() } });
-};
-
 const GeneratedDocList: FC<{ pages: SelectPage[] }> = (props) => {
   return (
     <div>
       {props.pages.map((ele) => (
-        <button onClick={() => goToPage(ele.id)}>
+        <Link
+          to="/page/$docId"
+          params={{ docId: ele.id.toString() }}
+          search={(curr) => ({ projectId: curr.projectId ?? -1 })}
+        >
           <div className="card bg-base-100 w-96 shadow-sm">
             <div className="card-body">
               <h2 className="card-title">{ele.name}</h2>
               <div className="card-actions justify-end"></div>
             </div>
           </div>
-        </button>
+        </Link>
       ))}
     </div>
   );

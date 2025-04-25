@@ -4,7 +4,7 @@ import { SelectProject } from "../../../electron/db/schema";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
 export const ProjectSelect: FC = () => {
-  const { projectId } = useSearch({ from: "/" });
+  const { projectId } = useSearch({ from: "__root__" });
 
   const navigate = useNavigate({ from: "/" });
 

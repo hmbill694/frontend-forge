@@ -3,17 +3,8 @@ import { GeneratePageForm } from "../lib/overview-page/generate-page-form";
 import { GeneratedDocs } from "../lib/overview-page/generated-docs";
 import MainLayout from "../lib/layout/main-layout";
 
-export type RootSearchParams = {
-  projectId: number;
-};
-
 export const Route = createFileRoute("/")({
   component: RouteComponent,
-  validateSearch: (search): RootSearchParams => {
-    return {
-      projectId: Number(search.projectId ?? -1),
-    };
-  },
 });
 
 function RouteComponent() {

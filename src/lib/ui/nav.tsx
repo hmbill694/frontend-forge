@@ -10,7 +10,7 @@ export default function NavBar() {
         <div className="space-x-4 flex">
           <Link
             to="/"
-            search={{ projectId: -1 }}
+            search={(curr) => ({ projectId: curr.projectId ?? -1 })}
             className="btn btn-ghost hover:text-gray-200"
           >
             Home
