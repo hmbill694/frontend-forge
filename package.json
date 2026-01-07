@@ -12,7 +12,7 @@
     "postinstall": "npm run rebuild"
   },
   "dependencies": {
-    "@langchain/core": "^0.3.47",
+    "@langchain/core": "^0.3.80",
     "@langchain/google-genai": "^0.2.4",
     "@langchain/langgraph": "^0.2.65",
     "@tailwindcss/vite": "^4.1.4",
